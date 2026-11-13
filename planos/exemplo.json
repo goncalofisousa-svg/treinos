@@ -1,0 +1,337 @@
+{
+ "id": "exemplo",
+ "cliente": "Exemplo",
+ "titulo": "Plano de exemplo · 2 semanas",
+ "inicio": "2026-11-23",
+ "descanso": "Dia livre. Caminha, hidrata-te e descansa.",
+ "envio": {
+  "url": "",
+  "token": "d4c27d7bf20c6a00d379ac4e060fd8a6"
+ },
+ "semanas": [
+  {
+   "n": 1,
+   "nota": "Semana de adaptação: foca-te na técnica.",
+   "dias": {
+    "seg": {
+     "titulo": "Força A · corpo inteiro",
+     "duracao": "45 min",
+     "nota": "Descansa 60 a 90 segundos entre séries. Pára 2 repetições antes de não conseguires mais.",
+     "blocos": [
+      {
+       "nome": "Aquecimento",
+       "itens": [
+        {
+         "t": "Marcha rápida",
+         "d": "3 min"
+        },
+        {
+         "t": "Mobilidade de tornozelo e anca",
+         "d": "2×8 por lado"
+        },
+        {
+         "t": "Ponte de glúteos",
+         "d": "2×10"
+        }
+       ]
+      },
+      {
+       "nome": "Principal",
+       "itens": [
+        {
+         "t": "Agachamento com kettlebell (goblet)",
+         "d": "3×10",
+         "n": "Costas direitas, joelhos na direção dos pés."
+        },
+        {
+         "t": "Remada com banda",
+         "d": "3×10"
+        },
+        {
+         "t": "Flexões inclinadas (mãos num banco)",
+         "d": "3×8"
+        },
+        {
+         "t": "Afundo alternado",
+         "d": "3×8 por perna"
+        }
+       ]
+      },
+      {
+       "nome": "Final",
+       "itens": [
+        {
+         "t": "Prancha",
+         "d": "3×20 s"
+        },
+        {
+         "t": "Respiração e alongamento leve",
+         "d": "2 min"
+        }
+       ]
+      }
+     ]
+    },
+    "qua": {
+     "titulo": "Cardio intervalado",
+     "duracao": "35 min",
+     "nota": "A corrida é leve: consegues falar frases curtas.",
+     "blocos": [
+      {
+       "nome": "Aquecimento",
+       "itens": [
+        {
+         "t": "Marcha rápida",
+         "d": "5 min"
+        }
+       ]
+      },
+      {
+       "nome": "Principal",
+       "itens": [
+        {
+         "t": "6 rondas",
+         "d": "1 min corrida leve + 2 min marcha"
+        }
+       ]
+      },
+      {
+       "nome": "Final",
+       "itens": [
+        {
+         "t": "Marcha lenta",
+         "d": "5 min"
+        },
+        {
+         "t": "Mobilidade de tornozelo e anca",
+         "d": "2 min"
+        }
+       ]
+      }
+     ]
+    },
+    "sex": {
+     "titulo": "Força B · corpo inteiro",
+     "duracao": "45 min",
+     "nota": "Descansa 60 a 90 segundos entre séries.",
+     "blocos": [
+      {
+       "nome": "Aquecimento",
+       "itens": [
+        {
+         "t": "Marcha rápida",
+         "d": "3 min"
+        },
+        {
+         "t": "Rotações de ombro com banda",
+         "d": "2×10"
+        },
+        {
+         "t": "Agachamento livre",
+         "d": "2×10"
+        }
+       ]
+      },
+      {
+       "nome": "Principal",
+       "itens": [
+        {
+         "t": "Peso morto romeno com kettlebell",
+         "d": "3×10",
+         "n": "Anca para trás, costas neutras."
+        },
+        {
+         "t": "Press de ombros com kettlebell ou banda",
+         "d": "3×8"
+        },
+        {
+         "t": "Remada com kettlebell",
+         "d": "3×10 por lado"
+        },
+        {
+         "t": "Passada lateral com banda",
+         "d": "3×10 por lado"
+        }
+       ]
+      },
+      {
+       "nome": "Final",
+       "itens": [
+        {
+         "t": "Dead bug",
+         "d": "3×8 por lado"
+        },
+        {
+         "t": "Respiração e alongamento leve",
+         "d": "2 min"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "n": 2,
+   "nota": "Mesmas sessões, um pouco mais de volume.",
+   "dias": {
+    "seg": {
+     "titulo": "Força A · corpo inteiro",
+     "duracao": "45 min",
+     "nota": "Descansa 60 a 90 segundos entre séries. Pára 2 repetições antes de não conseguires mais.",
+     "blocos": [
+      {
+       "nome": "Aquecimento",
+       "itens": [
+        {
+         "t": "Marcha rápida",
+         "d": "3 min"
+        },
+        {
+         "t": "Mobilidade de tornozelo e anca",
+         "d": "2×8 por lado"
+        },
+        {
+         "t": "Ponte de glúteos",
+         "d": "2×10"
+        }
+       ]
+      },
+      {
+       "nome": "Principal",
+       "itens": [
+        {
+         "t": "Agachamento com kettlebell (goblet)",
+         "d": "3×12",
+         "n": "Costas direitas, joelhos na direção dos pés."
+        },
+        {
+         "t": "Remada com banda",
+         "d": "3×12"
+        },
+        {
+         "t": "Flexões inclinadas (mãos num banco)",
+         "d": "3×10"
+        },
+        {
+         "t": "Afundo alternado",
+         "d": "3×8 por perna"
+        }
+       ]
+      },
+      {
+       "nome": "Final",
+       "itens": [
+        {
+         "t": "Prancha",
+         "d": "3×25 s"
+        },
+        {
+         "t": "Respiração e alongamento leve",
+         "d": "2 min"
+        }
+       ]
+      }
+     ]
+    },
+    "qua": {
+     "titulo": "Cardio intervalado",
+     "duracao": "35 min",
+     "nota": "A corrida é leve: consegues falar frases curtas.",
+     "blocos": [
+      {
+       "nome": "Aquecimento",
+       "itens": [
+        {
+         "t": "Marcha rápida",
+         "d": "5 min"
+        }
+       ]
+      },
+      {
+       "nome": "Principal",
+       "itens": [
+        {
+         "t": "8 rondas",
+         "d": "1 min corrida leve + 2 min marcha"
+        }
+       ]
+      },
+      {
+       "nome": "Final",
+       "itens": [
+        {
+         "t": "Marcha lenta",
+         "d": "5 min"
+        },
+        {
+         "t": "Mobilidade de tornozelo e anca",
+         "d": "2 min"
+        }
+       ]
+      }
+     ]
+    },
+    "sex": {
+     "titulo": "Força B · corpo inteiro",
+     "duracao": "45 min",
+     "nota": "Descansa 60 a 90 segundos entre séries.",
+     "blocos": [
+      {
+       "nome": "Aquecimento",
+       "itens": [
+        {
+         "t": "Marcha rápida",
+         "d": "3 min"
+        },
+        {
+         "t": "Rotações de ombro com banda",
+         "d": "2×10"
+        },
+        {
+         "t": "Agachamento livre",
+         "d": "2×10"
+        }
+       ]
+      },
+      {
+       "nome": "Principal",
+       "itens": [
+        {
+         "t": "Peso morto romeno com kettlebell",
+         "d": "3×12",
+         "n": "Anca para trás, costas neutras."
+        },
+        {
+         "t": "Press de ombros com kettlebell ou banda",
+         "d": "3×10"
+        },
+        {
+         "t": "Remada com kettlebell",
+         "d": "3×12 por lado"
+        },
+        {
+         "t": "Passada lateral com banda",
+         "d": "3×10 por lado"
+        }
+       ]
+      },
+      {
+       "nome": "Final",
+       "itens": [
+        {
+         "t": "Dead bug",
+         "d": "3×8 por lado"
+        },
+        {
+         "t": "Respiração e alongamento leve",
+         "d": "2 min"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
