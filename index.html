@@ -78,6 +78,13 @@ textarea{width:100%;min-height:72px;border-radius:14px;border:2px solid var(--in
 .done p{margin:2px 0;color:var(--mut);font-size:14px}
 .link{background:none;border:0;color:var(--ink);padding:10px 0 0;font-size:15px;font-weight:600;text-decoration:underline}
 .msg{text-align:center;color:var(--mut);padding:48px 8px}
+.ex{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.ex .nm{grid-column:1/-1;font-weight:600;font-size:15px}
+.ex .nm small{display:block;font-weight:400;color:var(--mut);font-size:13px;margin-top:2px}
+.ex label,.camp label{display:block;margin:0 0 4px;font-size:12px;color:var(--mut)}
+.ex input,.camp input{width:100%;box-sizing:border-box;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font:16px system-ui,sans-serif}
+.camp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.hint{color:var(--mut);font-size:13px;margin:4px 0 0}
 </style>
 </head>
 <body>
@@ -129,8 +136,9 @@ async function getPlano(){
 async function enviar(entry){
   const cfg=plano.envio||{};
   if(!cfg.url)return 'local';
-  const{sent,remoto,...dados}=entry;
-  const body=JSON.stringify({token:cfg.token,cliente:plano.id,...dados});
+  const{sent,remoto,cargas,...dados}=entry;
+  const ct=(cargas||[]).filter(c=>c.kg||c.r).map(c=>c.e+': '+(c.kg?c.kg+' kg':'')+(c.r?' '+c.r:'')).join(' | ');
+  const body=JSON.stringify({token:cfg.token,cliente:plano.id,...dados,cargas:ct});
   const hd={'Content-Type':'text/plain;charset=utf-8'};
   try{
     const r=await fetch(cfg.url,{method:'POST',headers:hd,body});
@@ -171,7 +179,7 @@ function seg(opts,val,pick,cls){
 }
 
 function render(){
-  const N=plano.semanas.length;
+  const N=plano.totalSemanas||plano.semanas.length;
   const sw=plano.semanas.find(x=>x.n===view.w)||plano.semanas[0];
   app.replaceChildren(
     h('header',null,
@@ -195,7 +203,7 @@ function banners(){
   if(!hoje.w){
     const hojeN=dayNum(agora),ini=dayNum(inicio);
     if(hojeN<ini)out.push(h('div',{class:'banner',text:`O plano começa a ${fmt(inicio)}.`}));
-    else out.push(h('div',{class:'banner',text:'Este plano terminou. Fala com o teu treinador para o próximo.'}));
+    else out.push(h('div',{class:'banner',text:plano.fim||'Este plano terminou. Fala com o teu treinador para o próximo.'}));
   }
   return out;
 }
@@ -228,10 +236,12 @@ function renderReg(){
     if(saved.estado==='feito'&&saved.esforco)det.push('Esforço: '+(ESF.find(e=>e[0]===saved.esforco)||[,''])[1].toLowerCase());
     if(saved.estado==='nao'&&saved.motivo)det.push('Motivo: '+saved.motivo.toLowerCase());
     box.replaceChildren(h('div',{class:'card done'},h('h3',{text:'✓ '+est}),det.length?h('p',{text:det.join(' · ')}):null,h('p',{text:st}),
-      saved.remoto?null:h('button',{type:'button',class:'link',onclick:()=>{draft[k]={estado:saved.estado,motivo:saved.motivo||'',esforco:saved.esforco||null,dor:saved.dor??0,nota:saved.nota||''};editing[k]=true;renderReg()}},'Alterar o registo')));
+      saved.remoto?null:h('button',{type:'button',class:'link',onclick:()=>{draft[k]={estado:saved.estado,motivo:saved.motivo||'',esforco:saved.esforco||null,dor:saved.dor??0,nota:saved.nota||'',cargas:saved.cargas||[],km:saved.km||'',min:saved.min||'',fc:saved.fc||''};editing[k]=true;renderReg()}},'Alterar o registo')));
     return;
   }
-  const d=draft[k]||(draft[k]={estado:null,motivo:'',esforco:null,dor:0,nota:''});
+  const d=draft[k]||(draft[k]={estado:null,motivo:'',esforco:null,dor:0,nota:'',cargas:[],km:'',min:'',fc:''});
+  const exs=[];(s.blocos||[]).forEach(b=>(b.itens||[]).forEach(it=>{if(it.reg)exs.push(it)}));
+  const campos=Array.isArray(s.campos)?s.campos:[];
   const again=()=>renderReg();
   const err=h('p',{class:'err',hidden:true});
   const dorAlert=d.dor===2?h('div',{class:'alert',text:'Se a dor se mantiver, fala com o teu treinador antes da próxima sessão.'}):null;
@@ -240,7 +250,7 @@ function renderReg(){
     if(!d.estado){showErr('Escolhe primeiro se fizeste a sessão.');return}
     if(d.estado==='feito'&&!d.esforco){showErr('Diz-me como foi o esforço.');return}
     btn.disabled=true;btn.textContent='A enviar…';
-    const entry={id:uid(),semana:view.w,dia:DIAS[view.d].k,data:iso(dataDe(view.w,view.d)),sessao:s.titulo,estado:d.estado,motivo:d.estado==='nao'?d.motivo:'',esforco:d.estado==='feito'?d.esforco:'',dor:d.estado==='feito'?d.dor:(d.motivo==='Dor'?2:0),nota:d.nota,ts:new Date().toISOString(),sent:false};
+    const entry={id:uid(),semana:view.w,dia:DIAS[view.d].k,data:iso(dataDe(view.w,view.d)),sessao:s.titulo,estado:d.estado,motivo:d.estado==='nao'?d.motivo:'',esforco:d.estado==='feito'?d.esforco:'',dor:d.estado==='feito'?d.dor:(d.motivo==='Dor'?2:0),nota:d.nota,cargas:d.estado==='feito'?exs.map((it,i)=>({e:it.t,kg:((d.cargas[i]||{}).kg||'').trim(),r:((d.cargas[i]||{}).r||'').trim()})).filter(c=>c.kg||c.r):[],km:d.estado==='feito'?(d.km||'').trim():'',min:d.estado==='feito'?(d.min||'').trim():'',fc:d.estado==='feito'?(d.fc||'').trim():'',ts:new Date().toISOString(),sent:false};
     store.regs[k]=entry;save();delete editing[k];
     const res=await enviar(entry);
     if(res!=='erro'){entry.sent=res;save()}
@@ -251,6 +261,15 @@ function renderReg(){
     h('h3',{text:'Como correu?'}),
     seg([['feito','✓ Feito'],['nao','✗ Não consegui']],d.estado,v=>{d.estado=v;again()},'big'),
     d.estado==='nao'?[h('label',{text:'Motivo (opcional)'}),seg(MOT.map(m=>[m,m]),d.motivo,v=>{d.motivo=d.motivo===v?'':v;again()})]:null,
+    d.estado==='feito'&&exs.length?[h('label',{text:'Cargas e repetições'}),h('p',{class:'hint',text:'Escreve a carga que usaste e as repetições de cada série (por exemplo 10/10/9). Se não fizeste um exercício, deixa em branco.'}),
+      ...exs.map((it,i)=>{const c=d.cargas[i]||(d.cargas[i]={kg:'',r:''});
+        return h('div',{class:'ex'},h('div',{class:'nm'},it.t,it.d?h('small',{text:'Plano: '+it.d}):null),
+          h('div',null,h('label',{text:'Carga (kg)'}),h('input',{type:'text',inputmode:'decimal',maxlength:'8',autocomplete:'off',value:c.kg,oninput:e=>{c.kg=e.target.value}})),
+          h('div',null,h('label',{text:'Repetições'}),h('input',{type:'text',inputmode:'text',maxlength:'24',autocomplete:'off',placeholder:'10/10/9',value:c.r,oninput:e=>{c.r=e.target.value}})))})]:null,
+    d.estado==='feito'&&campos.length?[h('label',{text:'Corrida (opcional)'}),h('div',{class:'camp'},
+      campos.includes('km')?h('div',null,h('label',{text:'Distância (km)'}),h('input',{type:'text',inputmode:'decimal',maxlength:'6',value:d.km,oninput:e=>{d.km=e.target.value}})):null,
+      campos.includes('min')?h('div',null,h('label',{text:'Duração (min)'}),h('input',{type:'text',inputmode:'decimal',maxlength:'6',value:d.min,oninput:e=>{d.min=e.target.value}})):null,
+      campos.includes('fc')?h('div',null,h('label',{text:'FC média'}),h('input',{type:'text',inputmode:'numeric',maxlength:'3',value:d.fc,oninput:e=>{d.fc=e.target.value}})):null)]:null,
     d.estado==='feito'?[h('label',{text:'Esforço'}),seg(ESF,d.esforco,v=>{d.esforco=v;again()}),
       h('label',{text:'Dor ou desconforto'}),seg(DOR,d.dor,v=>{d.dor=v;again()}),dorAlert]:null,
     h('label',{text:'Nota'}),ta,err,btn));
@@ -270,9 +289,10 @@ async function init(){
   document.title=plano.cliente?`Treino · ${plano.cliente}`:'Treino';
   inicio=fromIso(plano.inicio);
   const diff=dayNum(agora)-dayNum(inicio);
-  const N=plano.semanas.length;
-  if(diff>=0&&diff<N*7){hoje={w:Math.floor(diff/7)+1,d:diff%7};view={w:hoje.w,d:hoje.d}}
-  else if(diff<0)view={w:1,d:0};else view={w:N,d:0};
+  const first=plano.semanas[0].n,last=plano.semanas[plano.semanas.length-1].n;
+  const wk=diff>=0?Math.floor(diff/7)+1:0;
+  if(diff>=0&&wk>=first&&wk<=last){hoje={w:wk,d:diff%7};view={w:hoje.w,d:hoje.d}}
+  else if(diff<0||wk<first)view={w:first,d:0};else view={w:last,d:0};
   render();
   flush();sincronizar();
   window.addEventListener('online',flush);
