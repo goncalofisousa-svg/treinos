@@ -184,7 +184,7 @@ function render(){
   app.replaceChildren(
     h('header',null,
       h('div',null,h('div',{class:'k',text:plano.titulo||'Plano de treino'}),h('h1',{text:'Olá, '+plano.cliente})),
-      h('div',{class:'p',text:hoje.w?`Semana ${hoje.w} de ${N}`:''})),
+      h('div',{class:'p',text:hoje.w?`Semana ${hoje.w}`:''})),
     ...banners(),
     h('div',{class:'weeks',role:'tablist'},plano.semanas.map(s=>h('button',{type:'button',class:'chip'+(s.n===view.w?' on':''),role:'tab','aria-selected':String(s.n===view.w),onclick:()=>{view.w=s.n;render()}},'Sem '+s.n))),
     sw.nota?h('p',{class:'wnote',text:sw.nota}):null,
